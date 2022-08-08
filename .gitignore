@@ -1,0 +1,5 @@
+/server/image_model_v1/
+.git
+/server/cat.jpg
+/server/mobilenet-model.h5
+/server/__pycache__
