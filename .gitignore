@@ -1,6 +1,6 @@
-/server/image_model_v1/
+image_model_v1/
 .git
-/server/cat.jpg
-/server/mobilenet-model.h5
-/server/__pycache__/
-/server/mobilenetV2/*
+cat.jpg
+mobilenet-model.h5
+__pycache__/
+mobilenetV2/
