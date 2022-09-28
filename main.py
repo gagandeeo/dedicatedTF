@@ -2,6 +2,7 @@ from typing import Union
 from test_model import prepare_image, load_model, predict
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+import download_model
 
 app = FastAPI()
 model = load_model("./mobilenetV2")
@@ -31,4 +32,5 @@ async def create_upload_file(file: UploadFile):
     return {"result": res}
 
 if __name == "__main__":
-	run(app, host="0.0.0.0", port=5000)
+    download_model.download_model()
+    run(app, host="0.0.0.0", port=5000)
