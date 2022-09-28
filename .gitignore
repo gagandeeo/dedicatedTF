@@ -3,3 +3,4 @@
 /server/cat.jpg
 /server/mobilenet-model.h5
 /server/__pycache__/
+/server/mobilenetV2/*
