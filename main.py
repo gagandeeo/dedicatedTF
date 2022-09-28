@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import download_model
 
 app = FastAPI()
+
+download_model.download_model()
 model = load_model("./mobilenetV2")
 
 origins = ["*"]
@@ -32,5 +34,4 @@ async def create_upload_file(file: UploadFile):
     return {"result": res}
 
 if __name == "__main__":
-    download_model.download_model()
     run(app, host="0.0.0.0", port=5000)
