@@ -4,14 +4,15 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import ssl
 
+# Handle SSL certification for googleAPIs.
 ssl._create_default_https_context = ssl._create_unverified_context
-# import download_model
 
 app = FastAPI()
 
-# download_model.download_model()
+# Load model
 model = load_model("./mobilenetV2")
 
+# CORS handlers
 origins = ["*"]
 methods = ["*"]
 headers = ["*"]
@@ -24,10 +25,12 @@ app.add_middleware(
     allow_headers = headers    
 )
 
-@app.get("/hello")
+# About
+@app.get("/about")
 def hello_world():
-    return {"result": "helloworld"}
+    return {"result": "Model Serving API"}
 
+# Upload image and predict
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile):
     content = await file.read()
@@ -35,6 +38,3 @@ async def create_upload_file(file: UploadFile):
     res = predict(preprocess_img, model)
     res = res[0][:,1:]
     return {"result": res}
-
-# if __name == "__main__":
-#     run(app, host="0.0.0.0", port=5000)

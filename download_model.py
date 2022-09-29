@@ -3,7 +3,7 @@ import numpy as np
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications import imagenet_utils
 import tensorflowjs as tfjs
-# from IPython.display import Image
+
  
 def test_locally(filename):
     img = image.load_img(filename,target_size=(224,224))
@@ -21,5 +21,8 @@ def download_model():
     model = tf.keras.applications.mobilenet_v2.MobileNetV2()
     model.save('mobilenetV2')
 
+# Download and save model
+# download_model()
 
+# Convert keras model to tensorflowjs format for serving with js (if you want to implement the model in client side)
 # tfjs.converters.save_keras_model(model, "mobilenetv2")
