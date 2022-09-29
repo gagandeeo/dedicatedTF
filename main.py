@@ -2,11 +2,11 @@ from typing import Union
 from test_model import prepare_image, load_model, predict
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-import download_model
+# import download_model
 
 app = FastAPI()
 
-download_model.download_model()
+# download_model.download_model()
 model = load_model("./mobilenetV2")
 
 origins = ["*"]
