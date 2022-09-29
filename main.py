@@ -33,5 +33,5 @@ async def create_upload_file(file: UploadFile):
     res = res[0][:,1:]
     return {"result": res}
 
-if __name == "__main__":
-    run(app, host="0.0.0.0", port=5000)
+# if __name == "__main__":
+#     run(app, host="0.0.0.0", port=5000)
