@@ -27,8 +27,8 @@ WORKDIR "$APP_HOME"/app
 
 ENV PATH="$APP_HOME/dev.tensorflow.env/bin:$PATH"
 
-EXPOSE 5000
-ENTRYPOINT ["uvicorn", "main:app", "--reload", "--workers", "1", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 8000
+CMD uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
 
 
 # # Stage 1: Builder/Compiler
