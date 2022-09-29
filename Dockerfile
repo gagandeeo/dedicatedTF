@@ -11,7 +11,7 @@ FROM debian:buster-slim
 RUN apt update && \
     apt install --no-install-recommends -y build-essential python3 && \
     apt clean && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /root/.local/lib/python3.7/site-packages /usr/local/lib/python3.7/dist-packages
+COPY --from=builder /root/.local/lib/python3.8/site-packages /usr/local/lib/python3.8/dist-packages
 COPY . /src
 CMD ["python3", "/src/main.py"]
 EXPOSE 5000
