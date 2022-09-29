@@ -2,6 +2,9 @@ from typing import Union
 from test_model import prepare_image, load_model, predict
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 # import download_model
 
 app = FastAPI()
