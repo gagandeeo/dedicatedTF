@@ -1,5 +1,5 @@
 # Stage 1: Builder/Compiler
-FROM python:3.7-slim as builder
+FROM python:3.8-slim as builder
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc
 COPY requirements.txt /requirements.txt
