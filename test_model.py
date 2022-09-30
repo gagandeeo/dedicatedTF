@@ -8,6 +8,8 @@ import io
 # Preprocessing image
 def prepare_image(image_data):
     img_ = Image.open(io.BytesIO(image_data))
+    if(img_.mode != 'RGB'):
+        img_ = img_.convert('RGB')
     img_ = img_.resize((224,224))
     img_array = image.img_to_array(img_)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)
