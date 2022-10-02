@@ -19,10 +19,9 @@ def test_locally(filename):
 
 def download_model():
     model = tf.keras.applications.mobilenet_v2.MobileNetV2()
-    model.save('mobilenetV2')
+    model.save('mobilenetV2.h5')
+    # Convert model to tensorflowJS
+    tfjs.converters.save_keras_model(model, "JS-model")
 
 # Download and save model
-# download_model()
-
-# Convert keras model to tensorflowjs format for serving with js (if you want to implement the model in client side)
-# tfjs.converters.save_keras_model(model, "mobilenetv2")
+download_model()
