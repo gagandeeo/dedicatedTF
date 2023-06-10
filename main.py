@@ -1,16 +1,16 @@
-from typing import Union
-from test_model import prepare_image, load_model, predict
-from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-import ssl
+# from typing import Union
+# from test_model import prepare_image, load_model, predict
+# from fastapi import FastAPI, File, UploadFile
+# from fastapi.middleware.cors import CORSMiddleware
+# import ssl
 
 # Handle SSL certification for googleAPIs.
-ssl._create_default_https_context = ssl._create_unverified_context
+# ssl._create_default_https_context = ssl._create_unverified_context
 
 app = FastAPI()
 
 # Load model
-model = load_model("./mobilenetV2")
+# model = load_model("./mobilenetV2")
 
 # CORS handlers
 origins = ["*"]
@@ -31,10 +31,10 @@ def hello_world():
     return {"result": "Model Serving API"}
 
 # Upload image and predict
-@app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
-    content = await file.read()
-    preprocess_img = prepare_image(content)
-    res = predict(preprocess_img, model)
-    res = res[0][:,1:]
-    return {"result": res}
+# @app.post("/uploadfile/")
+# async def create_upload_file(file: UploadFile):
+#     content = await file.read()
+#     preprocess_img = prepare_image(content)
+#     res = predict(preprocess_img, model)
+#     res = res[0][:,1:]
+#     return {"result": res}
