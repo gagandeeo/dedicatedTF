@@ -1,38 +1,38 @@
-# anyio==3.6.1
-# blinker==1.4
-# certifi==2022.6.15
-# contourpy==1.0.5
-# cycler==0.11.0
+anyio==3.6.1
+blinker==1.4
+certifi==2022.6.15
+contourpy==1.0.5
+cycler==0.11.0
 fastapi==0.79.0
-# flatbuffers==1.12
-# fonttools==4.37.4
-# gast==0.4.0
-# google-pasta==0.2.0
-# h11==0.13.0
-# httptools==0.4.0
-# keras==2.9.0
-# kiwisolver==1.4.4
-# libclang==14.0.6
-# matplotlib==3.6.1
-# packaging==20.9
-# Pillow==9.2.0
-# protobuf==3.20.0
-# pyasn1==0.4.8
-# pyasn1-modules==0.2.7
-# pydantic==1.9.1
-# pyparsing==3.0.9
-# python-dateutil==2.8.2
-# python-dotenv==0.20.0
-# python-multipart==0.0.5
-# sniffio==1.2.0
-# starlette==0.19.1
-# tensorboard==2.9.0
-# tensorflow==2.9.0
-# tensorflow-estimator==2.9.0
-# tensorflow-hub==0.12.0
-# tensorflow-io-gcs-filesystem==0.26.0
-# tensorflowjs==3.19.0
+flatbuffers==1.12
+fonttools==4.37.4
+gast==0.4.0
+google-pasta==0.2.0
+h11==0.13.0
+httptools==0.4.0
+keras==2.9.0
+kiwisolver==1.4.4
+libclang==14.0.6
+matplotlib==3.6.1
+packaging==20.9
+Pillow==9.2.0
+protobuf==3.20.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.7
+pydantic==1.9.1
+pyparsing==3.0.9
+python-dateutil==2.8.2
+python-dotenv==0.20.0
+python-multipart==0.0.5
+sniffio==1.2.0
+starlette==0.19.1
+tensorboard==2.9.0
+tensorflow==2.9.0
+tensorflow-estimator==2.9.0
+tensorflow-hub==0.12.0
+tensorflow-io-gcs-filesystem==0.26.0
+tensorflowjs==3.19.0
 uvicorn==0.18.2
-# uvloop==0.16.0
-# watchfiles==0.16.1
-# websockets==10.3
+uvloop==0.16.0
+watchfiles==0.16.1
+websockets==10.3
