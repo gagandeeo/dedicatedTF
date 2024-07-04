@@ -13,7 +13,6 @@ RUN venv/bin/conda-unpack
 FROM debian:buster AS runtime
 
 ARG CACHEBUST=1
-
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 APP_USER=app APP_HOME=/home/app
 
 RUN useradd --no-log-init -r -m -U "$APP_USER"
@@ -27,4 +26,4 @@ WORKDIR "$APP_HOME"/app
 
 ENV PATH="$APP_HOME/dev.tensorflow.env/bin:$PATH"
 
-CMD uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port $PORT
+CMD uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8080
