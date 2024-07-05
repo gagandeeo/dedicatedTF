@@ -42,12 +42,12 @@
 #   Container Registry vs Artifact Registry   - https://cloud.google.com/blog/products/application-development/understanding-artifact-registry-vs-container-registry
 #   Principle of least privilege              - https://cloud.google.com/blog/products/identity-security/dont-get-pwned-practicing-the-principle-of-least-privilege
 
-name: Build and Deploy to Cloud Run
+name: Build and Deploy to GKE
 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-#   push:
-#     branches: [ main ]
+  push:
+    branches: [ main ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -98,8 +98,9 @@ jobs:
           docker build -t $IMAGE_NAME ./
           docker push $IMAGE_NAME
 
-      - name: Get GKE credentials
+      - name: Install plugin and Get GKE credentials
         run: |
+          gcloud components install gke-gcloud-auth-plugin
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }} --project ${{ env.PROJECT_ID }}
 
       - name: Deploy to GKE
