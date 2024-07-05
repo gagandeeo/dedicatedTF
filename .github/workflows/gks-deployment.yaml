@@ -106,9 +106,10 @@ jobs:
       - name: Deploy to GKE
         id: deploy
         run: |
+          export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          envsubst < k8s/deployment.yaml | kubectl apply -f -
           kubectl apply -f k8s/service.yaml
-        # export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        # envsubst < k8s/deployment.yaml | kubectl apply -f -
+        
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app
 
