@@ -61,6 +61,9 @@ env:
   SERVICE: service1 # TODO: update Cloud Run service name
   REPO_NAME: image-classifier-repo
   IMAGE_NAME: dedicated-tf
+  GKE_CLUSTER: fruicy
+  GKE_ZONE: asia-south1	
+
 
 jobs:
   deploy:
@@ -95,17 +98,17 @@ jobs:
           docker build -t $IMAGE_NAME ./
           docker push $IMAGE_NAME
 
-      # - name: Get GKE credentials
-      #   run: |
-      #     gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --zone ${{ secrets.GKE_ZONE }} --project ${{ secrets.GCP_PROJECT }}
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }} --project ${{ env.PROJECT_ID }}
 
-      # - name: Deploy to GKE
-      #   id: deploy
-      #   run: |
-      #     export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-      #     envsubst < k8s/deployment.yaml | kubectl apply -f -
-      #   # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
-      #   # kubectl rollout status deployment/my-app
+      - name: Deploy to GKE
+        id: deploy
+        run: |
+          export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          envsubst < k8s/deployment.yaml | kubectl apply -f -
+        # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
+        # kubectl rollout status deployment/my-app
 
       # # If required, use the Cloud Run url output in later steps
       # - name: Show Output
