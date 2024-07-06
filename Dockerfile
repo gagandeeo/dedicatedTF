@@ -26,4 +26,4 @@ WORKDIR "$APP_HOME"/app
 
 ENV PATH="$APP_HOME/dev.tensorflow.env/bin:$PATH"
 
-CMD uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8080
+CMD uvicorn main:app --reload --workers $(nproc) --host 0.0.0.0 --port 8080
