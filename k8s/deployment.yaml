@@ -16,6 +16,9 @@ spec:
       - name: classifier
         image: $IMAGE_NAME
         resources:
+          requests:
+            memory: "512Mi"
+            cpu: "256m"
           limits:
             memory: "512Mi"
             cpu: "256m"
