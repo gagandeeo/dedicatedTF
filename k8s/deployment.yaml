@@ -17,10 +17,10 @@ spec:
         image: $IMAGE_NAME
         resources:
           requests:
-            memory: "512Mi"
+            memory: "1Gi"
             cpu: "128m"
           limits:
-            memory: "512Mi"
+            memory: "1Gi"
             cpu: "128m"
         ports:
         - containerPort: 8080
