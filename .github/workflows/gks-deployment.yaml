@@ -62,7 +62,7 @@ env:
   REPO_NAME: image-classifier-repo
   IMAGE_NAME: dedicated-tf
   GKE_CLUSTER: fruicy
-  GKE_ZONE: asia-south1	
+  GKE_ZONE: asia-south1-c	
 
 
 jobs:
