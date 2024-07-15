@@ -4,3 +4,5 @@ cat.jpg
 mobilenet-model.h5
 __pycache__/
 # mobilenetV2/
+images/
+mock-test-api.py

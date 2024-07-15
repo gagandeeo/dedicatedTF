@@ -47,7 +47,7 @@ name: Build and Deploy to GKE
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ main, test/resources-allocation ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -62,7 +62,7 @@ env:
   REPO_NAME: image-classifier-repo
   IMAGE_NAME: dedicated-tf
   GKE_CLUSTER: fruicy
-  GKE_ZONE: asia-south1	
+  GKE_ZONE: asia-south1-c	
 
 
 jobs:
