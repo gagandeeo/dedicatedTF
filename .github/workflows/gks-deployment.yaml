@@ -47,7 +47,7 @@ name: Build and Deploy to GKE
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main, test/resources-allocation ]
+    branches: [ main, test/resources-allocation, test/hpa-autoscaling ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -109,6 +109,7 @@ jobs:
           export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           envsubst < k8s/deployment.yaml | kubectl apply -f -
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/hpa-autoscaling.yaml
         
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app

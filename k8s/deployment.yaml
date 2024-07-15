@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myapp
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: myapp
@@ -17,10 +17,10 @@ spec:
         image: $IMAGE_NAME
         resources:
           requests:
-            memory: "750Mi"
+            memory: "256Mi"
             cpu: "128m"
           limits:
-            memory: "750Mi"
+            memory: "512Mi"
             cpu: "128m"
         ports:
         - containerPort: 8080
