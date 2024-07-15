@@ -92,11 +92,11 @@ jobs:
         run: |
           gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
 
-      - name: Build and Push Container
-        run: |
-          IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker build -t $IMAGE_NAME ./
-          docker push $IMAGE_NAME
+      # - name: Build and Push Container
+      #   run: |
+      #     IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      #     docker build -t $IMAGE_NAME ./
+      #     docker push $IMAGE_NAME
 
       - name: Install plugin and Get GKE credentials
         run: |
@@ -106,7 +106,7 @@ jobs:
       - name: Deploy to GKE
         id: deploy
         run: |
-          export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          export IMAGE_NAME=asia-south1-docker.pkg.dev/tutorial-project-426306/image-classifier-repo/dedicated-tf:f624b197e6103df88ef9665a3f7879f1b3a4595e
           envsubst < k8s/deployment.yaml | kubectl apply -f -
           kubectl apply -f k8s/service.yaml
           kubectl apply -f k8s/hpa-autoscaling.yaml
