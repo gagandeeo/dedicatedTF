@@ -119,7 +119,7 @@ jobs:
         run: |
           kubectl apply -f k8s/service-monitor.yaml
           kubectl apply -f k8s/prometheus-service.yaml
-
+          kubectl apply -f k8s/prometheus-ui-service.yaml
         # kubectl apply -f k8s/hpa-autoscaling.yaml
         
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
