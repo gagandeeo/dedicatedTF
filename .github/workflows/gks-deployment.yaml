@@ -109,6 +109,17 @@ jobs:
           export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           envsubst < k8s/deployment.yaml | kubectl apply -f -
           kubectl apply -f k8s/service.yaml
+      
+      - name: Install Prometheus Operator
+        run: |
+          LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
+          curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
+
+      - name: Deploy Prometheus Monitor
+        run: |
+          kubectl apply -f k8s/service-monitor.yaml
+          kubectl apply -f k8s/prometheus-service.yaml
+
         # kubectl apply -f k8s/hpa-autoscaling.yaml
         
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
