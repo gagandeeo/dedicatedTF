@@ -9,7 +9,7 @@ spec:
     app: myapp
   ports:
     - name: backend
-      protocol: UDP
+      protocol: TCP
       port: 80
       targetPort: 8080
   type: LoadBalancer
