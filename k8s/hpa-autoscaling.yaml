@@ -16,7 +16,7 @@ spec:
         name: in_progress_requests
       target:
         type: Value
-        averageValue: 2
+        value: 2
 
   # - type: Resource
   #   resource:
