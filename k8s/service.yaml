@@ -11,5 +11,5 @@ spec:
     - name: backend
       protocol: TCP
       port: 80
-      targetPort: backend-container-port
+      targetPort: backend-port
   type: LoadBalancer
