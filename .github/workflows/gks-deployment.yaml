@@ -138,7 +138,7 @@ jobs:
       - name: Prometheus Adapter Changes
         run: |
           kubectl apply -f k8s/adapter-config.yaml --force
-          kubectl rollout restart deployment prometheus-adapter --force
+          kubectl rollout restart deployment prometheus-adapter
           kubectl create -f k8s/api-service.yaml --force
         # kubectl apply -f k8s/hpa-autoscaling.yaml
         
