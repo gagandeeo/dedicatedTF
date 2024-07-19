@@ -15,8 +15,8 @@ spec:
       metric:
         name: in_progress_requests
       target:
-        type: Value
-        value: 2
+        type: AverageValue
+        averageValue: 2
 
   # - type: Resource
   #   resource:
