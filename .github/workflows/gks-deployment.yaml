@@ -129,6 +129,17 @@ jobs:
           kubectl apply -f k8s/prometheus-service.yaml --force
           kubectl apply -f k8s/prometheus-UI-Service.yaml --force
 
+      - name: Deploy Prometheus Adapter
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
+          helm install prometheus-adapter prometheus-community/prometheus-adapter
+
+      - name: Prometheus Adapter Changes
+        run: |
+          kubectl apply -f k8s/adapter-config.yaml
+          kubectl rollout restart deployment prometheus-adapter
+          $ kubectl create -f k8s/api-service.yaml
         # kubectl apply -f k8s/hpa-autoscaling.yaml
         
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
