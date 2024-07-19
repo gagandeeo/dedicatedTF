@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: prometheus
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - name: prometheus-ui
     nodePort: 30900
     port: 9090
     protocol: TCP
-    targetPort: web
+    targetPort: backend
   selector:
     prometheus: prometheus
