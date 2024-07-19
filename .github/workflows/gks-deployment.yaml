@@ -122,9 +122,13 @@ jobs:
           
       - name: Deploy Prometheus Monitor
         run: |
-          kubectl apply -f k8s/prometheus-UI-Service.yaml --force
           kubectl apply -f k8s/service-monitor.yaml --force
+          kubectl apply -f k8s/prometheus.service.account.yaml --force
+          kubectl apply -f k8s/prometheus.cluster.role.yaml --force
+          kubectl apply -f k8s/prometheus.cluster.role.binding.yaml --force
           kubectl apply -f k8s/prometheus-service.yaml --force
+          kubectl apply -f k8s/prometheus-UI-Service.yaml --force
+
         # kubectl apply -f k8s/hpa-autoscaling.yaml
         
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
