@@ -23,5 +23,4 @@ spec:
             memory: "750Mi"
             cpu: "128m"
         ports:
-        - name: backend
-          containerPort: 8080
+        - containerPort: 8080
