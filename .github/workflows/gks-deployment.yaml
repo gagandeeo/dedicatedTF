@@ -47,7 +47,7 @@ name: Build and Deploy to GKE
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main, test/custom-metrics-prometheus, fix/correct-port-forwarding ]
+    branches: [ main, test/custom-metrics-prometheus, hpa/custom-metric ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -135,13 +135,16 @@ jobs:
       #     helm repo update
       #     helm install prometheus-adapter prometheus-community/prometheus-adapter
 
-      - name: Prometheus Adapter Changes
-        run: |
-          kubectl apply -f k8s/api-service.yaml --force
+      # - name: Prometheus Adapter Changes
+      #   run: |
+        # kubectl apply -f k8s/api-service.yaml --force
         # kubectl apply -f k8s/adapter-config.yaml
         # kubectl rollout restart deployment prometheus-adapter
-        # kubectl apply -f k8s/hpa-autoscaling.yaml
         
+      - name: HPA Configuration
+        run: |
+          kubectl apply -f k8s/hpa-autoscaling.yaml --force
+
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app
 
