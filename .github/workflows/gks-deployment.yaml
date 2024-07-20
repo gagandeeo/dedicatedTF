@@ -47,7 +47,7 @@ name: Build and Deploy to GKE
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main, test/custom-metrics-prometheus, hpa/custom-metric ]
+    branches: [ main, test/custom-metrics-prometheus, hpa/custom-metric, test/hpa-in-monitoring-namespace ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -126,13 +126,13 @@ jobs:
       # #     LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
       # #     curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
           
-      # - name: Deploy Prometheus Monitor
-      #   run: |
+      - name: Deploy Prometheus Monitor
+        run: |
+          kubectl apply -f k8s/prometheus-monitoring/prometheus-service.yaml --force
       #     kubectl apply -f k8s/service-monitor/service-monitor.yaml --force
       #     kubectl apply -f k8s/prometheus-monitoring/prometheus.service.account.yaml --force
       #     kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.yaml --force
       #     kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.binding.yaml --force
-      #     kubectl apply -f k8s/prometheus-monitoring/prometheus-service.yaml --force
       #     kubectl apply -f k8s/prometheus-monitoring/prometheus-UI-Service.yaml --force
 
       # - name: Deploy Prometheus Adapter
@@ -145,9 +145,9 @@ jobs:
       #     kubectl rollout restart deployment prometheus-adapter -n monitoring
       #     kubectl apply -f k8s/prometheus-monitoring/api-service.yaml --force
         
-      - name: HPA Configuration
-        run: |
-          kubectl apply -f k8s/scaling/hpa-autoscaling.yaml --force
+      # - name: HPA Configuration
+      #   run: |
+      #     kubectl apply -f k8s/scaling/hpa-autoscaling.yaml --force
 
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app

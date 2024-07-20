@@ -8,6 +8,9 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       app: myapp-servicemonitor
+  serviceMonitorNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: default
   resources:
     requests:
       memory: 400Mi
