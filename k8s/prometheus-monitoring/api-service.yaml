@@ -8,6 +8,6 @@ spec:
   insecureSkipTLSVerify: true
   service:
     name: prometheus-adapter
-    namespace: default
+    namespace: monitoring
   version: v1beta2
   versionPriority: 100
