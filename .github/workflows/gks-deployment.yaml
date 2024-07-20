@@ -103,51 +103,51 @@ jobs:
           gcloud components install gke-gcloud-auth-plugin
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }} --project ${{ env.PROJECT_ID }}
 
-      - name: Deploy to GKE
-        id: deploy
-        run: |
-          export IMAGE_NAME=asia-south1-docker.pkg.dev/tutorial-project-426306/image-classifier-repo/dedicated-tf:b6c16da5a2a7d1937f0ce37413cdb0ef03306b96
-          envsubst < k8s/backend-app/deployment.yaml | kubectl apply --force -f -
-          kubectl apply -f k8s/backend-app/service.yaml --force
+      # - name: Deploy to GKE
+      #   id: deploy
+      #   run: |
+      #     export IMAGE_NAME=asia-south1-docker.pkg.dev/tutorial-project-426306/image-classifier-repo/dedicated-tf:b6c16da5a2a7d1937f0ce37413cdb0ef03306b96
+      #     envsubst < k8s/backend-app/deployment.yaml | kubectl apply --force -f -
+      #     kubectl apply -f k8s/backend-app/service.yaml --force
       
-      - name: Install Metric-server
-        run: |
-          kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-          kubectl get deployment metrics-server -n kube-system
-
-      - name: Install Prometheus Operator
-        run: |
-          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-          helm repo update
-          helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+      # - name: Install Metric-server
+      #   run: |
+      #     kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+      #     kubectl get deployment metrics-server -n kube-system
 
       # - name: Install Prometheus Operator
       #   run: |
-      #     LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
-      #     curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
+      #     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      #     helm repo update
+      #     helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+
+      # # - name: Install Prometheus Operator
+      # #   run: |
+      # #     LATEST=$(curl -s https://api.github.com/repos/prometheus-operator/prometheus-operator/releases/latest | jq -cr .tag_name)
+      # #     curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${LATEST}/bundle.yaml | kubectl create -f -
           
-      - name: Deploy Prometheus Monitor
-        run: |
-          kubectl apply -f k8s/service-monitor/service-monitor.yaml --force
-          kubectl apply -f k8s/prometheus-monitoring/prometheus.service.account.yaml --force
-          kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.yaml --force
-          kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.binding.yaml --force
-          kubectl apply -f k8s/prometheus-monitoring/prometheus-service.yaml --force
-          kubectl apply -f k8s/prometheus-monitoring/prometheus-UI-Service.yaml --force
-
-      - name: Deploy Prometheus Adapter
-        run: |
-          helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace monitoring
-
-      - name: Prometheus Adapter Changes
-        run: |
-          kubectl apply -f k8s/prometheus-monitoring/adapter-config.yaml
-          kubectl rollout restart deployment prometheus-adapter -n monitoring
-          kubectl apply -f k8s/prometheus-monitoring/api-service.yaml --force
-        
-      # - name: HPA Configuration
+      # - name: Deploy Prometheus Monitor
       #   run: |
-      #     kubectl apply -f k8s/scaling/hpa-autoscaling.yaml --force
+      #     kubectl apply -f k8s/service-monitor/service-monitor.yaml --force
+      #     kubectl apply -f k8s/prometheus-monitoring/prometheus.service.account.yaml --force
+      #     kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.yaml --force
+      #     kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.binding.yaml --force
+      #     kubectl apply -f k8s/prometheus-monitoring/prometheus-service.yaml --force
+      #     kubectl apply -f k8s/prometheus-monitoring/prometheus-UI-Service.yaml --force
+
+      # - name: Deploy Prometheus Adapter
+      #   run: |
+      #     helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace monitoring
+
+      # - name: Prometheus Adapter Changes
+      #   run: |
+      #     kubectl apply -f k8s/prometheus-monitoring/adapter-config.yaml
+      #     kubectl rollout restart deployment prometheus-adapter -n monitoring
+      #     kubectl apply -f k8s/prometheus-monitoring/api-service.yaml --force
+        
+      - name: HPA Configuration
+        run: |
+          kubectl apply -f k8s/scaling/hpa-autoscaling.yaml --force
 
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app
