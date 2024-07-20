@@ -46,8 +46,8 @@ name: Build and Deploy to GKE
 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  # push:
-  #   branches: [ main, test/custom-metrics-prometheus, hpa/custom-metric ]
+  push:
+    branches: [ main, test/custom-metrics-prometheus, hpa/custom-metric ]
 #   pull_request:
 #     branches: [ main ]
   release:
@@ -92,11 +92,11 @@ jobs:
         run: |
           gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
 
-      - name: Build and Push Container
-        run: |
-          IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker build -t $IMAGE_NAME ./
-          docker push $IMAGE_NAME
+      # - name: Build and Push Container
+      #   run: |
+      #     IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      #     docker build -t $IMAGE_NAME ./
+      #     docker push $IMAGE_NAME
 
       - name: Install plugin and Get GKE credentials
         run: |
@@ -106,9 +106,9 @@ jobs:
       - name: Deploy to GKE
         id: deploy
         run: |
-          export IMAGE_NAME=${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          envsubst < k8s/deployment.yaml | kubectl apply --force -f -
-          kubectl apply -f k8s/service.yaml --force
+          export IMAGE_NAME=asia-south1-docker.pkg.dev/tutorial-project-426306/image-classifier-repo/dedicated-tf:b6c16da5a2a7d1937f0ce37413cdb0ef03306b96
+          envsubst < k8s/backend-app/deployment.yaml | kubectl apply --force -f -
+          kubectl apply -f k8s/backend-app/service.yaml --force
       
       - name: Install Metric-server
         run: |
@@ -128,12 +128,12 @@ jobs:
           
       - name: Deploy Prometheus Monitor
         run: |
-          kubectl apply -f k8s/service-monitor.yaml --force
-          kubectl apply -f k8s/prometheus.service.account.yaml --force
-          kubectl apply -f k8s/prometheus.cluster.role.yaml --force
-          kubectl apply -f k8s/prometheus.cluster.role.binding.yaml --force
-          kubectl apply -f k8s/prometheus-service.yaml --force
-          kubectl apply -f k8s/prometheus-UI-Service.yaml --force
+          kubectl apply -f k8s/service-monitor/service-monitor.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/prometheus.service.account.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/prometheus.cluster.role.binding.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/prometheus-service.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/prometheus-UI-Service.yaml --force
 
       - name: Deploy Prometheus Adapter
         run: |
@@ -141,13 +141,13 @@ jobs:
 
       - name: Prometheus Adapter Changes
         run: |
-          kubectl apply -f k8s/adapter-config.yaml
+          kubectl apply -f k8s/prometheus-monitoring/adapter-config.yaml
           kubectl rollout restart deployment prometheus-adapter -n monitoring
-          kubectl apply -f k8s/api-service.yaml --force
+          kubectl apply -f k8s/prometheus-monitoring/api-service.yaml --force
         
       - name: HPA Configuration
         run: |
-          kubectl apply -f k8s/hpa-autoscaling.yaml --force
+          kubectl apply -f k8s/scaling/hpa-autoscaling.yaml --force
 
         # kubectl set image deployment/my-app my-app=gcr.io/${{ secrets.GCP_PROJECT }}/my-app:${{ github.sha }}
         # kubectl rollout status deployment/my-app
